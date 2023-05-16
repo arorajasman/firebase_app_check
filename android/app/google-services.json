@@ -1,0 +1,100 @@
+{
+  "project_info": {
+    "project_number": "207996285308",
+    "project_id": "devicethread",
+    "storage_bucket": "devicethread.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207996285308:android:4ea3f4cef2886af97034f9",
+        "android_client_info": {
+          "package_name": "com.devicethread"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207996285308-ffbcfh7ngtgs4d97q5semlj5tudp11o6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devicethread",
+            "certificate_hash": "618fc62b040832dec46e5430357adcb2278af7c8"
+          }
+        },
+        {
+          "client_id": "207996285308-fnc4e75t41nu923jq45eqao3keggd8hm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5c9_7IilKpnvVi6Sn7UZI8ol_j_1dAGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207996285308-fnc4e75t41nu923jq45eqao3keggd8hm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "207996285308-rfh6ta77in9smlr3b4gvm5l9o23sid9l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.devicethread.mvp",
+                "app_store_id": "1640659044"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207996285308:android:ab58eafd552618eb7034f9",
+        "android_client_info": {
+          "package_name": "com.devicethread.mvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207996285308-cao5lo8eh7toatf54lcb34jl7f6tqrov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devicethread.mvp",
+            "certificate_hash": "dbe61b6c8d90e9b66ddb9579afd07402af0160fb"
+          }
+        },
+        {
+          "client_id": "207996285308-fnc4e75t41nu923jq45eqao3keggd8hm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5c9_7IilKpnvVi6Sn7UZI8ol_j_1dAGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207996285308-fnc4e75t41nu923jq45eqao3keggd8hm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "207996285308-rfh6ta77in9smlr3b4gvm5l9o23sid9l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.devicethread.mvp",
+                "app_store_id": "1640659044"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
