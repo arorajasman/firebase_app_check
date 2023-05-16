@@ -39,11 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "207996285308-rfh6ta77in9smlr3b4gvm5l9o23sid9l.apps.googleusercontent.com",
+              "client_id": "207996285308-onvre0tcnrpnl3ipa7taai4vhuujl06f.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.devicethread.mvp",
-                "app_store_id": "1640659044"
+                "bundle_id": "com.example.firebaseProject"
               }
             }
           ]
@@ -84,11 +83,10 @@
               "client_type": 3
             },
             {
-              "client_id": "207996285308-rfh6ta77in9smlr3b4gvm5l9o23sid9l.apps.googleusercontent.com",
+              "client_id": "207996285308-onvre0tcnrpnl3ipa7taai4vhuujl06f.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.devicethread.mvp",
-                "app_store_id": "1640659044"
+                "bundle_id": "com.example.firebaseProject"
               }
             }
           ]

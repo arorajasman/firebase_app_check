@@ -13,12 +13,14 @@ import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'tabs_page.dart';
 
+String token = "";
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   await FirebaseAppCheck.instance.activate(
     // webRecaptchaSiteKey: 'recaptcha-v3-site-key',
     // Default provider for Android is the Play Integrity provider. You can use the "AndroidProvider" enum to choose
@@ -28,20 +30,14 @@ Future<void> main() async {
     // 3. play integrity provider
     androidProvider: AndroidProvider.debug,
   );
- 
 
-   try {
+  try {
     String? token = await FirebaseAppCheck.instance.getToken();
-    if (token != null) {
-      print('Firebase App Check token: $token');
-    } else {
-      print('Firebase App Check token is null');
-    }
+    print("token: $token");
   } catch (e) {
-    print('Failed to retrieve Firebase App Check token: $e');
+    token = e.toString();
   }
-  
-  
+
   runApp(const MyApp());
 }
 
@@ -70,7 +66,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({
+  const MyHomePage({
     Key? key,
     required this.title,
     required this.analytics,
@@ -342,6 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: _sendAnalyticsEvent,
             child: const Text('Test logEvent'),
           ),
+          Text(token),
           MaterialButton(
             onPressed: _testAllEventTypes,
             child: const Text('Test standard event types'),
