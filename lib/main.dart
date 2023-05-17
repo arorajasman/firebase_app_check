@@ -3,12 +3,14 @@
 // found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 import 'firebase_options.dart';
 import 'tabs_page.dart';
@@ -78,10 +80,10 @@ class MyHomePage extends StatefulWidget {
   final FirebaseAnalyticsObserver observer;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   String _message = '';
 
   void setMessage(String message) {
@@ -324,6 +326,37 @@ class _MyHomePageState extends State<MyHomePage> {
       searchTerm: 'test search term',
     );
     setMessage('All standard events logged successfully');
+  }
+
+  AppUpdateInfo? updateInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid) {
+      InAppUpdate.checkForUpdate().then((value) {
+        if (updateInfo!.updateAvailability ==
+            UpdateAvailability.updateAvailable) {
+          if (updateInfo!.immediateUpdateAllowed) {
+            // Perform immediate update
+            InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
+              if (appUpdateResult == AppUpdateResult.success) {
+                print("app update successful");
+              }
+            });
+          } else if (updateInfo!.flexibleUpdateAllowed) {
+            InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
+              if (appUpdateResult == AppUpdateResult.success) {
+                //App Update successful
+                InAppUpdate.completeFlexibleUpdate();
+              }
+            });
+          }
+        }
+      }).catchError((error) {
+        print("error: ${error.toString()}");
+      });
+    }
   }
 
   @override
