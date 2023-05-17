@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 import 'tabs_page.dart';
 
-String token = "";
+String? token = "";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,14 +28,17 @@ Future<void> main() async {
     // 1. debug provider
     // 2. safety net provider
     // 3. play integrity provider
-    androidProvider: AndroidProvider.debug,
+    androidProvider: AndroidProvider.playIntegrity,
+    appleProvider: AppleProvider.deviceCheck,
   );
 
   try {
-    String? token = await FirebaseAppCheck.instance.getToken();
+    token = await FirebaseAppCheck.instance.getToken();
+
     print("token: $token");
   } catch (e) {
     token = e.toString();
+    print("token: $token");
   }
 
   runApp(const MyApp());
@@ -338,7 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: _sendAnalyticsEvent,
             child: const Text('Test logEvent'),
           ),
-          Text(token),
+          Text(token!),
           MaterialButton(
             onPressed: _testAllEventTypes,
             child: const Text('Test standard event types'),
