@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>337426779657-15gubl2b0ju3aju4bsqru68rjsg0ervd.apps.googleusercontent.com</string>
+	<string>207996285308-rfh6ta77in9smlr3b4gvm5l9o23sid9l.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.337426779657-15gubl2b0ju3aju4bsqru68rjsg0ervd</string>
+	<string>com.googleusercontent.apps.207996285308-rfh6ta77in9smlr3b4gvm5l9o23sid9l</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>207996285308-1fouqdvl91f49ui4emsnaucvtv1nii02.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBr6msBhsDZUdyf3iBvpSQOb84nC5LAVQo</string>
+	<string>AIzaSyBUALnk2zMrBxDNOMdj8Hq7e8VHYd8WtAk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>337426779657</string>
+	<string>207996285308</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.firebaseProject</string>
+	<string>com.devicethread.mvp</string>
 	<key>PROJECT_ID</key>
-	<string>my-first-project-802c7</string>
+	<string>devicethread</string>
 	<key>STORAGE_BUCKET</key>
-	<string>my-first-project-802c7.appspot.com</string>
+	<string>devicethread.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:337426779657:ios:566c61cd855b0d0e84b2d8</string>
+	<string>1:207996285308:ios:4134d4c9bc57a0a47034f9</string>
 </dict>
 </plist>
