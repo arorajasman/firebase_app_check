@@ -11,11 +11,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'firebase_options.dart';
 import 'tabs_page.dart';
 
 String token = "";
+String forceUpdateError = "";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -329,10 +331,15 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   AppUpdateInfo? updateInfo;
+  String appVersion = "";
 
   @override
   void initState() {
     super.initState();
+    PackageInfo.fromPlatform().then((value) {
+      appVersion = "${value.version} ${value.buildNumber}";
+      setState(() {});
+    });
     if (Platform.isAndroid) {
       InAppUpdate.checkForUpdate().then((value) {
         if (updateInfo!.updateAvailability ==
@@ -354,7 +361,7 @@ class MyHomePageState extends State<MyHomePage> {
           }
         }
       }).catchError((error) {
-        print("error: ${error.toString()}");
+        forceUpdateError = "error: ${error.toString()}";
       });
     }
   }
@@ -372,6 +379,8 @@ class MyHomePageState extends State<MyHomePage> {
             child: const Text('Test logEvent'),
           ),
           Text(token),
+          Text(forceUpdateError),
+          Text(appVersion),
           MaterialButton(
             onPressed: _testAllEventTypes,
             child: const Text('Test standard event types'),
