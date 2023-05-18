@@ -17,7 +17,7 @@ import 'firebase_options.dart';
 import 'tabs_page.dart';
 
 String token = "";
-String forceUpdateError = "";
+String forceUpdateMessage = "";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,7 +85,7 @@ class MyHomePage extends StatefulWidget {
   MyHomePageState createState() => MyHomePageState();
 }
 
-class MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   String _message = '';
 
   void setMessage(String message) {
@@ -336,19 +336,29 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+
     PackageInfo.fromPlatform().then((value) {
       appVersion = "${value.version} ${value.buildNumber}";
       setState(() {});
     });
+  }
+
+  void forceUpdateApp() {
     if (Platform.isAndroid) {
+      forceUpdateMessage = "Inside isAndroid";
       InAppUpdate.checkForUpdate().then((value) {
+        forceUpdateMessage = "Inside Check for update method";
         if (updateInfo!.updateAvailability ==
             UpdateAvailability.updateAvailable) {
+          forceUpdateMessage = "Inside Update Available";
           if (updateInfo!.immediateUpdateAllowed) {
             // Perform immediate update
             InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
               if (appUpdateResult == AppUpdateResult.success) {
-                print("app update successful");
+                forceUpdateMessage =
+                    "Inside immediate uppdate\napp update successful";
               }
             });
           } else if (updateInfo!.flexibleUpdateAllowed) {
@@ -356,13 +366,33 @@ class MyHomePageState extends State<MyHomePage> {
               if (appUpdateResult == AppUpdateResult.success) {
                 //App Update successful
                 InAppUpdate.completeFlexibleUpdate();
+                forceUpdateMessage = "app flexible update successful";
+              }
+            });
+          } else {
+            InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
+              if (appUpdateResult == AppUpdateResult.success) {
+                //App Update successful
+                InAppUpdate.completeFlexibleUpdate();
+                forceUpdateMessage = "app flexible update successful";
               }
             });
           }
+        } else {
+          forceUpdateMessage = "Update not available";
         }
       }).catchError((error) {
-        forceUpdateError = "error: ${error.toString()}";
+        forceUpdateMessage = "error: ${error.toString()}";
       });
+    }
+    setState(() {});
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      print("App resumed");
     }
   }
 
@@ -372,56 +402,62 @@ class MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[
-          MaterialButton(
-            onPressed: _sendAnalyticsEvent,
-            child: const Text('Test logEvent'),
-          ),
-          Text(token),
-          Text(forceUpdateError),
-          Text(appVersion),
-          MaterialButton(
-            onPressed: _testAllEventTypes,
-            child: const Text('Test standard event types'),
-          ),
-          MaterialButton(
-            onPressed: _testSetUserId,
-            child: const Text('Test setUserId'),
-          ),
-          MaterialButton(
-            onPressed: _testSetCurrentScreen,
-            child: const Text('Test setCurrentScreen'),
-          ),
-          MaterialButton(
-            onPressed: _testSetAnalyticsCollectionEnabled,
-            child: const Text('Test setAnalyticsCollectionEnabled'),
-          ),
-          MaterialButton(
-            onPressed: _testSetSessionTimeoutDuration,
-            child: const Text('Test setSessionTimeoutDuration'),
-          ),
-          MaterialButton(
-            onPressed: _testSetUserProperty,
-            child: const Text('Test setUserProperty'),
-          ),
-          MaterialButton(
-            onPressed: _testAppInstanceId,
-            child: const Text('Test appInstanceId'),
-          ),
-          MaterialButton(
-            onPressed: _testResetAnalyticsData,
-            child: const Text('Test resetAnalyticsData'),
-          ),
-          MaterialButton(
-            onPressed: _setDefaultEventParameters,
-            child: const Text('Test setDefaultEventParameters'),
-          ),
-          Text(
-            _message,
-            style: const TextStyle(color: Color.fromARGB(255, 0, 155, 0)),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            MaterialButton(
+              onPressed: _sendAnalyticsEvent,
+              child: const Text('Test logEvent'),
+            ),
+            Text(token),
+            Text(forceUpdateMessage),
+            Text(appVersion),
+            MaterialButton(
+              onPressed: forceUpdateApp,
+              child: const Text('Update App'),
+            ),
+            MaterialButton(
+              onPressed: _testAllEventTypes,
+              child: const Text('Test standard event types'),
+            ),
+            MaterialButton(
+              onPressed: _testSetUserId,
+              child: const Text('Test setUserId'),
+            ),
+            MaterialButton(
+              onPressed: _testSetCurrentScreen,
+              child: const Text('Test setCurrentScreen'),
+            ),
+            MaterialButton(
+              onPressed: _testSetAnalyticsCollectionEnabled,
+              child: const Text('Test setAnalyticsCollectionEnabled'),
+            ),
+            MaterialButton(
+              onPressed: _testSetSessionTimeoutDuration,
+              child: const Text('Test setSessionTimeoutDuration'),
+            ),
+            MaterialButton(
+              onPressed: _testSetUserProperty,
+              child: const Text('Test setUserProperty'),
+            ),
+            MaterialButton(
+              onPressed: _testAppInstanceId,
+              child: const Text('Test appInstanceId'),
+            ),
+            MaterialButton(
+              onPressed: _testResetAnalyticsData,
+              child: const Text('Test resetAnalyticsData'),
+            ),
+            MaterialButton(
+              onPressed: _setDefaultEventParameters,
+              child: const Text('Test setDefaultEventParameters'),
+            ),
+            Text(
+              _message,
+              style: const TextStyle(color: Color.fromARGB(255, 0, 155, 0)),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
