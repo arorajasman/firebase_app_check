@@ -22,12 +22,7 @@ Future<void> main() async {
   );
 
   await FirebaseAppCheck.instance.activate(
-    // webRecaptchaSiteKey: 'recaptcha-v3-site-key',
-    // Default provider for Android is the Play Integrity provider. You can use the "AndroidProvider" enum to choose
-    // your preferred provider. Choose from:
-    // 1. debug provider
-    // 2. safety net provider
-    // 3. play integrity provider
+    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
     androidProvider: AndroidProvider.playIntegrity,
     appleProvider: AppleProvider.deviceCheck,
   );
@@ -335,54 +330,56 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[
-          MaterialButton(
-            onPressed: _sendAnalyticsEvent,
-            child: const Text('Test logEvent'),
-          ),
-          Text(token!),
-          MaterialButton(
-            onPressed: _testAllEventTypes,
-            child: const Text('Test standard event types'),
-          ),
-          MaterialButton(
-            onPressed: _testSetUserId,
-            child: const Text('Test setUserId'),
-          ),
-          MaterialButton(
-            onPressed: _testSetCurrentScreen,
-            child: const Text('Test setCurrentScreen'),
-          ),
-          MaterialButton(
-            onPressed: _testSetAnalyticsCollectionEnabled,
-            child: const Text('Test setAnalyticsCollectionEnabled'),
-          ),
-          MaterialButton(
-            onPressed: _testSetSessionTimeoutDuration,
-            child: const Text('Test setSessionTimeoutDuration'),
-          ),
-          MaterialButton(
-            onPressed: _testSetUserProperty,
-            child: const Text('Test setUserProperty'),
-          ),
-          MaterialButton(
-            onPressed: _testAppInstanceId,
-            child: const Text('Test appInstanceId'),
-          ),
-          MaterialButton(
-            onPressed: _testResetAnalyticsData,
-            child: const Text('Test resetAnalyticsData'),
-          ),
-          MaterialButton(
-            onPressed: _setDefaultEventParameters,
-            child: const Text('Test setDefaultEventParameters'),
-          ),
-          Text(
-            _message,
-            style: const TextStyle(color: Color.fromARGB(255, 0, 155, 0)),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            MaterialButton(
+              onPressed: _sendAnalyticsEvent,
+              child: const Text('Test logEvent'),
+            ),
+            Text(token!),
+            MaterialButton(
+              onPressed: _testAllEventTypes,
+              child: const Text('Test standard event types'),
+            ),
+            MaterialButton(
+              onPressed: _testSetUserId,
+              child: const Text('Test setUserId'),
+            ),
+            MaterialButton(
+              onPressed: _testSetCurrentScreen,
+              child: const Text('Test setCurrentScreen'),
+            ),
+            MaterialButton(
+              onPressed: _testSetAnalyticsCollectionEnabled,
+              child: const Text('Test setAnalyticsCollectionEnabled'),
+            ),
+            MaterialButton(
+              onPressed: _testSetSessionTimeoutDuration,
+              child: const Text('Test setSessionTimeoutDuration'),
+            ),
+            MaterialButton(
+              onPressed: _testSetUserProperty,
+              child: const Text('Test setUserProperty'),
+            ),
+            MaterialButton(
+              onPressed: _testAppInstanceId,
+              child: const Text('Test appInstanceId'),
+            ),
+            MaterialButton(
+              onPressed: _testResetAnalyticsData,
+              child: const Text('Test resetAnalyticsData'),
+            ),
+            MaterialButton(
+              onPressed: _setDefaultEventParameters,
+              child: const Text('Test setDefaultEventParameters'),
+            ),
+            Text(
+              _message,
+              style: const TextStyle(color: Color.fromARGB(255, 0, 155, 0)),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
