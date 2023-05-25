@@ -8,9 +8,11 @@ import 'dart:io';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_project/app_details_model.dart';
+import 'package:firebase_project/app_update_utils.dart';
+import 'package:firebase_project/firebase_remote_config_bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:in_app_update/in_app_update.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'firebase_options.dart';
@@ -330,60 +332,31 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     setMessage('All standard events logged successfully');
   }
 
-  AppUpdateInfo? updateInfo;
   String appVersion = "";
+  int version = 0;
+  AppDetailsModel appDetailsModel = const AppDetailsModel();
+  String firebaseRemoteConfigError = "";
 
-  @override
-  void initState() {
-    super.initState();
+  /// Note:
+  /// priority 0 == immediate update
+  /// priority 1 == flexible update
 
-    WidgetsBinding.instance.addObserver(this);
-
-    PackageInfo.fromPlatform().then((value) {
-      appVersion = "${value.version} ${value.buildNumber}";
-      setState(() {});
-    });
-  }
-
-  void forceUpdateApp() {
+  void updateApp() {
+    print("forceUpdateApp: ${appDetailsModel.toJSON()}");
+    final int lastImmediateAndroidAppVersion = AppUpdateUtils()
+        .getExtendedVersionNumber(
+            appDetailsModel.androidLastMinimumUpdateVersion);
     if (Platform.isAndroid) {
-      forceUpdateMessage = "Inside isAndroid";
-      InAppUpdate.checkForUpdate().then((value) {
-        forceUpdateMessage = "Inside Check for update method";
-        if (updateInfo!.updateAvailability ==
-            UpdateAvailability.updateAvailable) {
-          forceUpdateMessage = "Inside Update Available";
-          if (updateInfo!.immediateUpdateAllowed) {
-            // Perform immediate update
-            InAppUpdate.performImmediateUpdate().then((appUpdateResult) {
-              if (appUpdateResult == AppUpdateResult.success) {
-                forceUpdateMessage =
-                    "Inside immediate uppdate\napp update successful";
-              }
-            });
-          } else if (updateInfo!.flexibleUpdateAllowed) {
-            InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
-              if (appUpdateResult == AppUpdateResult.success) {
-                //App Update successful
-                InAppUpdate.completeFlexibleUpdate();
-                forceUpdateMessage = "app flexible update successful";
-              }
-            });
-          } else {
-            InAppUpdate.startFlexibleUpdate().then((appUpdateResult) {
-              if (appUpdateResult == AppUpdateResult.success) {
-                //App Update successful
-                InAppUpdate.completeFlexibleUpdate();
-                forceUpdateMessage = "app flexible update successful";
-              }
-            });
-          }
-        } else {
-          forceUpdateMessage = "Update not available";
-        }
-      }).catchError((error) {
-        forceUpdateMessage = "error: ${error.toString()}";
-      });
+      /// force app update for android
+      forceUpdateMessage = AppUpdateUtils().androidAppUpdate(
+          appDetailsModel, lastImmediateAndroidAppVersion, version);
+    } else {
+      /// force app update for iOS
+      forceUpdateMessage = AppUpdateUtils().iOSAppUpdate(
+        appDetailsModel,
+        version,
+        context,
+      );
     }
     setState(() {});
   }
@@ -394,6 +367,24 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       print("App resumed");
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    if (!kIsWeb) {
+      firebaseRemoteConfigBloc.init().then((value) {
+        appDetailsModel = value;
+        updateApp();
+      });
+    }
+    PackageInfo.fromPlatform().then((value) {
+      appVersion = "${value.version} ${value.buildNumber}";
+      version = AppUpdateUtils().getExtendedVersionNumber(value.version);
+      print("version: $version");
+      setState(() {});
+    });
   }
 
   @override
@@ -412,8 +403,10 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             Text(token),
             Text(forceUpdateMessage),
             Text(appVersion),
+            Text(firebaseRemoteConfigError),
+            Text(appDetailsModel.toJSON().toString()),
             MaterialButton(
-              onPressed: forceUpdateApp,
+              onPressed: updateApp,
               child: const Text('Update App'),
             ),
             MaterialButton(
