@@ -29,8 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
     bool isFirebaseAppCheckTokenCalled =
         prefs.getBool(ApiConstants.IS_FIREBASE_APPCHECK_TOKEN_CALLED) ?? false;
     if (!isFirebaseAppCheckTokenCalled) {
-      if (token!.isNotEmpty) {
-        bool isValidAppCheckToken = await ApiService().playIntegrity(token!);
+      if (token.isNotEmpty) {
+        bool isValidAppCheckToken = await ApiService().playIntegrity(token);
         print("isValidAppCheckToken $isValidAppCheckToken");
 
         if (!isValidAppCheckToken) {

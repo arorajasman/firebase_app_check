@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase_options.dart';
 
-String? token = "";
+String token = "";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,8 +32,8 @@ Future<void> main() async {
   print(isAPICalled.toString());
   if (!isAPICalled) {
     try {
-      token = await FirebaseAppCheck.instance.getToken();
-    print("token: $token");
+      token = await FirebaseAppCheck.instance.getToken() ?? "";
+      print("token: $token");
     } catch (e) {
       // token = e.toString();
       print("error: $e");
