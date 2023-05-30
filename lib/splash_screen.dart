@@ -23,10 +23,11 @@ class _SplashScreenState extends State<SplashScreen> {
     PackageInfo.fromPlatform().then((value) {
       appVersion = "${value.version} ${value.buildNumber}";
       setState(() {});
+      _checkVerification();
     });
 
     super.initState();
-    _checkVerification();
+    
   }
 
   Future<void> _checkVerification() async {
