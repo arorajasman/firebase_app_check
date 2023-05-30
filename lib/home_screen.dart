@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 10,
                 ),
                 Text(
-                  token!,
+                  token,
                   style: const TextStyle(fontSize: 12),
                 ),
               ],
