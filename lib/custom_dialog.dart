@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_project/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -26,7 +27,7 @@ class CustomDialog {
             ),
           ),
           content: Text(
-            content,
+            content + appVersion,
             style: const TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 14.0,

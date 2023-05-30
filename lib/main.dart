@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
 String token = "";
+String appVersion = "";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -7,6 +7,7 @@ import 'package:firebase_project/custom_dialog.dart';
 import 'package:firebase_project/home_screen.dart';
 import 'package:firebase_project/main.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,6 +20,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    PackageInfo.fromPlatform().then((value) {
+      appVersion = "${value.version} ${value.buildNumber}";
+      setState(() {});
+    });
+
     super.initState();
     _checkVerification();
   }
