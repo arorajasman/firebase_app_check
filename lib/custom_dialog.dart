@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_project/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +8,7 @@ class CustomDialog {
     BuildContext context,
     String title,
     String content,
+    String appVersion
   ) {
     showDialog(
       context: context,

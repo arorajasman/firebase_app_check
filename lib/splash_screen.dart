@@ -43,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
           CustomDialog.showJailBrokenAlertDialog(
             context,
             "Unverified",
+            appVersion,
             "Unverified Device cannot run this app/Token is invalid",
           );
         } else {
@@ -52,6 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
         CustomDialog.showJailBrokenAlertDialog(
           context,
           "No Token Found",
+          "",
           "Could Not Found Token For this Device",
         );
       }
@@ -63,6 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
         CustomDialog.showJailBrokenAlertDialog(
           context,
           "Unverified",
+          "",
           "Unverified Device cannot run this app/Token is invalid",
         );
       }
