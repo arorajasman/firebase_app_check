@@ -77,3 +77,5 @@ class _SplashScreenState extends State<SplashScreen> {
         child: FlutterLogo(size: MediaQuery.of(context).size.height));
   }
 }
+//Not getting token in emulator and simulator
+//Not getting token for play integrity in debug mode
