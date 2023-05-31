@@ -1,6 +1,6 @@
 class ApiConstants {
   static String baseUrl =
-      'https://cef7-103-199-225-144.ngrok-free.app';
+      'https://c30b-2401-4900-2e8e-6401-24c5-5686-206f-5890.ngrok-free.app';
   static String usersEndpoint = '/app/verifyAppCheckToken';
   static String authorization = "Authorization";
   static String bearer = "Bearer";
